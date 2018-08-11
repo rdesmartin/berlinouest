@@ -4,29 +4,29 @@ import { Link } from "react-router-dom";
 import WallMap from "../components/Map";
 import CoordInput from "../components/CoordInput";
 
+import { geolocated } from "react-geolocated";
+
 import Localisation from "../components/Localisation";
 
 class LocalisationContainer extends Component {
   constructor(props){
     super(props);
     this.state = {
+      geolocAvailable: false,
+      geolocEnabled: false,
       pos: {}
     };
     // this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-         this.setState((state) => ({ pos: pos }));
-      },
-      (err) => console.log('Error: ' + err),
-      {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0
+    console.log(this.props);
+    if (this.props.isGeolocationAvailable) {
+      this.setState({...this.state, geolocAvailable: true});
+      if (this.props.isGeolocationEnabled) {
+        this.setState({...this.state, geolocEnabled: true, pos: this.props.coords});
       }
-    );
+    }
   }
 
   // handleChange(coord) {
@@ -37,8 +37,12 @@ class LocalisationContainer extends Component {
   //   );
   // }
 
+  static getDerivedStateFromProps(props, state) {
+    return { ...state, pos: props.coords };
+  }
+
   render() {
-    const {pos} = this.state;
+    const { pos, geolocAvailable, geolocEnabled } = this.state;
 
     return (
       <div>
@@ -48,13 +52,19 @@ class LocalisationContainer extends Component {
         <div style={ {display: "flex", flexFlow: "row nowrap"}} >
           <h1>Your position</h1>
         </div>
+        {}
         <Localisation pos={pos} />
-        {pos.coords &&
-          <WallMap lat={pos.coords.latitude} lng={pos.coords.longitude}/>
+        {pos &&
+          <WallMap lat={pos.latitude} lng={pos.longitude}/>
         }
       </div>
       );
   }
 }
 
-export default LocalisationContainer;
+export default geolocated({
+  positionOptions: {
+    enableHighAccuracy: true,
+  },
+  userDecisionTimeout: 5000,
+})(LocalisationContainer);

@@ -11,15 +11,15 @@ class Localisation extends Component {
   render() {
     const { pos } = this.props;
 
-    if (pos.coords) {
+    if (pos) {
       return (
         <ul>
-          <li>latitude: {pos.coords.latitude}</li>
-          <li>longitude: {pos.coords.longitude}</li>
+          <li>latitude: {pos.latitude}</li>
+          <li>longitude: {pos.longitude}</li>
         </ul>
       );
     } else {
-      return <div>please give auth</div>;
+      return <div>Localisation unavailable</div>;
     }
   }
 }
