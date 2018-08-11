@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import TestMap from "../components/Map";
+
+import WallMap from "../components/Map";
+import CoordInput from "../components/CoordInput";
 
 import Localisation from "../components/Localisation";
 
@@ -9,7 +11,8 @@ class LocalisationContainer extends Component {
     super(props);
     this.state = {
       pos: {}
-    }
+    };
+    // this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -26,6 +29,14 @@ class LocalisationContainer extends Component {
     );
   }
 
+  // handleChange(coord) {
+  //   return (
+  //     event => {
+  //       this.setState((state) => { [coord]: event.target.value })
+  //     }
+  //   );
+  // }
+
   render() {
     const {pos} = this.state;
 
@@ -34,10 +45,12 @@ class LocalisationContainer extends Component {
         <p>
           <Link to={{ pathname: '/home' }}>Home</Link>
         </p>
-        <h1>Your position</h1>
+        <div style={ {display: "flex", flexFlow: "row nowrap"}} >
+          <h1>Your position</h1>
+        </div>
         <Localisation pos={pos} />
         {pos.coords &&
-          <TestMap lat={pos.coords.latitude} lng={pos.coords.longitude}/>
+          <WallMap lat={pos.coords.latitude} lng={pos.coords.longitude}/>
         }
       </div>
       );

@@ -1,10 +1,24 @@
 //@flow
 import React, { Component } from "react";
 import { Map, TileLayer, Marker, Popup, GeoJSON } from "react-leaflet";
+import L from "leaflet";
+import LeafletPip from "@mapbox/leaflet-pip";
 
 var geojson = require('../assets/BerlinWall.json'); // eslint-disable-line import/no-webpack-loader-syntax
 
-export default class SimpleExample extends Component {
+const RenderSide = ({inWest}) => {
+  console.log(inWest);
+
+  var side = "";
+  if (inWest) {
+    side = "WEST";
+  } else {
+    side = "EAST";
+  }
+  return <div>You are in {side} BERLIN</div>
+}
+
+class WallMap extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -15,38 +29,46 @@ export default class SimpleExample extends Component {
     }
   }
 
-  getData() {
-    this.setState({
-      geojson
-  });
+  isInWest(pos, geojson) {
+    if (!pos || !geojson) {
+      return false;
+    }
+    const gjLayer = L.geoJSON(geojson);
+    return LeafletPip.pointInLayer(pos, gjLayer).length;
   }
 
   componentDidMount() {
-    this.getData();
-    this.setState((state) => this.props);
+    this.setState({
+      ...this.state,
+      pos: [this.props.lat, this.props.lng],
+      geojson,
+    });
   }
 
   render() {
-    console.log(this.state.geojson);
-    const position = [this.state.lat, this.state.lng];
-    const { geojson } = this.state;
+    const { pos, geojson } = this.state;
+    const inWest = this.isInWest(pos, geojson);
 
     return (
-      <Map center={position} zoom={this.state.zoom} style={{height: "500px"}}>
-        <TileLayer
-          attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-      {
-        geojson &&
-          <GeoJSON data={geojson} />
-      }
-        <Marker position={position}>
-          <Popup>
-            <p>You are here</p>
-          </Popup>
-        </Marker>
-      </Map>
+      <div>
+        <RenderSide inWest={inWest} />
+        <Map center={pos} zoom={this.state.zoom} style={{height: "500px"}}>
+          <TileLayer
+            attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          {
+            geojson &&
+              <GeoJSON data={geojson} />
+          }
+          <Marker position={pos}>
+            <Popup>
+              <RenderSide inWest={inWest} />
+            </Popup>
+          </Marker>
+        </Map></div>
     )
   }
 }
+
+export default WallMap;
