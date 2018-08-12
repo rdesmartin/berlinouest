@@ -1,57 +1,41 @@
 //@flow
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Map, TileLayer, Marker, Popup, GeoJSON } from "react-leaflet";
 import L from "leaflet";
 import LeafletPip from "@mapbox/leaflet-pip";
 
 var geojson = require('../assets/BerlinWall.json'); // eslint-disable-line import/no-webpack-loader-syntax
 
-const RenderSide = ({inWest}) => {
-  console.log(inWest);
-
-  var side = "";
-  if (inWest) {
-    side = "WEST";
-  } else {
-    side = "EAST";
-  }
-  return <div>You are in {side} BERLIN</div>
-}
-
 class WallMap extends Component {
   constructor(props){
     super(props);
     this.state = {
-      lat: 0,
-      lng: 0,
+      pos: null,
       zoom: 13,
       geojson: null,
     }
   }
 
-  isInWest(pos, geojson) {
-    if (!pos || !geojson) {
-      return false;
-    }
-    const gjLayer = L.geoJSON(geojson);
-    return LeafletPip.pointInLayer(pos, gjLayer).length;
-  }
-
   componentDidMount() {
+    const pos = this.props.pos ? this.props.pos.coords : null;
     this.setState({
       ...this.state,
-      pos: [this.props.lat, this.props.lng],
+      pos,
       geojson,
     });
   }
 
+  static getDerivedStateFromProps(props, state) {
+    return { ...state, pos: props.pos };
+  }
+
   render() {
     const { pos, geojson } = this.state;
-    const inWest = this.isInWest(pos, geojson);
 
     return (
       <div>
-        <RenderSide inWest={inWest} />
+        {pos &&
         <Map center={pos} zoom={this.state.zoom} style={{height: "500px"}}>
           <TileLayer
             attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
@@ -63,12 +47,19 @@ class WallMap extends Component {
           }
           <Marker position={pos}>
             <Popup>
-              <RenderSide inWest={inWest} />
+              <div>You are here</div>
             </Popup>
           </Marker>
-        </Map></div>
+        </Map>
+        }
+        {!pos && <div>Unable to find your location</div>}
+      </div>
     )
   }
 }
+
+WallMap.propTypes = {
+  pos: PropTypes.object,
+};
 
 export default WallMap;

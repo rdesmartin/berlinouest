@@ -1,11 +1,9 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class Localisation extends Component {
   constructor(props){
     super(props);
-    this.state = {
-      pos: {}
-    }
   }
 
   render() {
@@ -14,14 +12,18 @@ class Localisation extends Component {
     if (pos) {
       return (
         <ul>
-          <li>latitude: {pos.latitude}</li>
-          <li>longitude: {pos.longitude}</li>
+          <li>latitude: {pos.lat}</li>
+          <li>longitude: {pos.lng}</li>
         </ul>
       );
     } else {
       return <div>Localisation unavailable</div>;
     }
   }
+}
+
+Localisation.propTypes = {
+  pos: PropTypes.object
 }
 
 
