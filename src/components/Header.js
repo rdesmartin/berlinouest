@@ -4,26 +4,31 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import grey from "@material-ui/core/colors/grey";
 
 import { Menu, Github } from 'react-feather';
 
 import SideDrawer from "./SideDrawer";
+import Localisation from "./Localisation";
 
 const styles = {
   root: {
-    backgroundColor: grey[900],
     flexGrow: 1,
+  },
+  toolbar: {
+    backgroundColor: grey[900],
+    display: "flex",
+    flexFlow: "row nowrap",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   flex: {
     flexGrow: 1,
   },
   menuButton: {
     color: "white",
-    marginLeft: -12,
-    marginRight: 20,
+    margin: 10,
   },
 };
 
@@ -36,7 +41,7 @@ class Header extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, pos } = this.props;
 
     const toggleDrawer = open => {
       this.setState({drawerOpen: open});
@@ -49,8 +54,8 @@ class Header extends Component {
             open={this.state.drawerOpen}
             toggleDrawer={toggleDrawer}
           />
-        
-          <Toolbar>
+
+        <Toolbar className={classes.toolbar}>
             <IconButton
               className={classes.menuButton}
               aria-label="Menu"
@@ -59,10 +64,7 @@ class Header extends Component {
               <Menu />
             </IconButton>
 
-            <Typography variant="title" className={classes.flex}>
-              Berlin
-            </Typography>
-
+            <Localisation pos={pos} />
             <IconButton
               className={classes.menuButton}
               color="inherit"

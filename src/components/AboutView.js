@@ -1,12 +1,27 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 
+const styles = {
+  container: {
+    display: "flex",
+    flexFlow: "column nowrap",
+    alignItems: "center",
+    textAlign: "center",
+  }
+};
 
 class AboutView extends Component {
+  constructor(props){
+    super(props);
+  }
+
   render() {
+    const { classes } = this.props;
+
     return (
-      <div>
-        <h1>About Page</h1>
+      <div className={classes.container}>
+        <h1>Berlin Wall App</h1>
         <p>This program uses React-Leaflet, React.js and Openstreetmap data to
           tell if you are currently in West Berlin or not.</p>
         <a href="https://github.com/rdesmartin/leaflet_reactjs_openstreetmap_berliner_mauer">
@@ -17,4 +32,8 @@ class AboutView extends Component {
   }
 }
 
-export default AboutView;
+AboutView.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(AboutView);

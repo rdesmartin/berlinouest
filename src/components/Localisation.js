@@ -1,5 +1,18 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { withStyles } from '@material-ui/core/styles';
+
+import Icon from '@material-ui/core/IconButton';
+import { Compass } from 'react-feather';
+
+const styles = {
+  container: {
+    display: "flex",
+    flexFlow: "row nowrap",
+    alignItems: "center",
+    color: "white",
+  },
+}
 
 class Localisation extends Component {
   constructor(props){
@@ -7,18 +20,27 @@ class Localisation extends Component {
   }
 
   render() {
-    const { pos } = this.props;
+    const { pos, classes } = this.props;
 
-    if (pos) {
-      return (
-        <ul>
-          <li>latitude: {pos.lat}</li>
-          <li>longitude: {pos.lng}</li>
-        </ul>
-      );
-    } else {
-      return <div>Localisation unavailable</div>;
-    }
+    return (
+      <div className={classes.container}>
+        <Icon
+          style={{color: "white"}}
+          aria-label="Localisation"
+        >
+          <Compass />
+        </Icon>
+        { pos &&
+        <div>
+            <div>latitude: {pos.lat}</div>
+            <div>longitude: {pos.lng}</div>
+          </div>
+        }
+        { !pos &&
+          <div>Localisation unavailable</div>
+        }
+      </div>
+    );
   }
 }
 
@@ -27,4 +49,4 @@ Localisation.propTypes = {
 }
 
 
-export default Localisation
+export default withStyles(styles)(Localisation)

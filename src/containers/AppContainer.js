@@ -77,8 +77,7 @@ class AppContainer extends Component {
 
     return (
       <div>
-        <Header />
-        <Localisation pos={pos} />
+        <Header pos={pos}/>
         <Switch>
           <Route path="/about" component={AboutView} />
 
