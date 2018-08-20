@@ -17,10 +17,6 @@ const styles = {
 };
 
 class HomeView extends Component {
-  constructor(props){
-    super(props);
-  }
-
   render() {
     const { classes, side } = this.props;
 

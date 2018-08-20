@@ -14,7 +14,8 @@ export const Sides = {
  */
 
 export function setPosition(pos) {
-  return { type: ActionTypes.SET_POS, pos }
+	console.log("pos: " + JSON.stringify(pos));
+	return { type: ActionTypes.SET_POS, pos }
 }
 
 export function setSide(side) {

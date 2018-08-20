@@ -1,49 +1,37 @@
 //@flow
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Map, TileLayer, Marker, Popup, GeoJSON } from "react-leaflet";
-import L from "leaflet";
-import LeafletPip from "@mapbox/leaflet-pip";
-
-var geojson = require('../assets/BerlinWall.json'); // eslint-disable-line import/no-webpack-loader-syntax
 
 class WallMap extends Component {
   constructor(props){
     super(props);
     this.state = {
       pos: null,
-      zoom: 13,
-      geojson: null,
+      zoom: 10,
     }
   }
 
-  componentDidMount() {
-    const pos = this.props.pos ? this.props.pos.coords : null;
-    this.setState({
-      ...this.state,
-      pos,
-      geojson,
-    });
-  }
-
-  static getDerivedStateFromProps(props, state) {
-    return { ...state, pos: props.pos };
-  }
-
   render() {
-    const { pos, geojson } = this.state;
+    const { pos, geojsonWall, geojsonCity } = this.props;
+    const viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 
     return (
       <div>
         {pos &&
-        <Map center={pos} zoom={this.state.zoom} style={{height: "500px"}}>
+        <Map center={pos} zoom={this.state.zoom} style={{height: viewportHeight - 56}}>
           <TileLayer
             attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           {
-            geojson &&
-              <GeoJSON data={geojson} />
+            geojsonWall &&
+              <GeoJSON data={geojsonWall} />
+          }
+          {
+            geojsonWall &&
+              <GeoJSON data={geojsonCity} />
           }
           <Marker position={pos}>
             <Popup>
@@ -62,4 +50,9 @@ WallMap.propTypes = {
   pos: PropTypes.object,
 };
 
-export default WallMap;
+const MapStateToProps = state => ({
+  pos: state.pos,
+});
+
+
+export default connect(MapStateToProps)(WallMap);

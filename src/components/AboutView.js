@@ -12,10 +12,6 @@ const styles = {
 };
 
 class AboutView extends Component {
-  constructor(props){
-    super(props);
-  }
-
   render() {
     const { classes } = this.props;
 

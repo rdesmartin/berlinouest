@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
 
 import Icon from '@material-ui/core/IconButton';
@@ -15,10 +16,6 @@ const styles = {
 }
 
 class Localisation extends Component {
-  constructor(props){
-    super(props);
-  }
-
   render() {
     const { pos, classes } = this.props;
 
@@ -48,5 +45,8 @@ Localisation.propTypes = {
   pos: PropTypes.object
 }
 
+const MapStateToProps = state => ({
+  pos: state.pos
+});
 
-export default withStyles(styles)(Localisation)
+export default withStyles(styles)(connect(MapStateToProps)(Localisation))
