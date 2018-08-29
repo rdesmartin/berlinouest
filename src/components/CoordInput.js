@@ -1,24 +1,22 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
+import onClickOutside from "react-onclickoutside";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 const styles = {
-  root: {
-    margin: "5px 10px"
-  },
   form: {
     display: "flex", 
     flexFlow: "column nowrap",
-    margin: "5px 10px"
+    margin: "0px 20px"
   },
   buttonsContainer: {
     width: "100%", 
     display: "flex", 
     flexFlow: "row nowrap", 
-    justifyContent: "center"
+    justifyContent: "center",
+    alignItems: "center"
   }
 }
 
@@ -27,17 +25,13 @@ class CoordInput extends Component {
     pos: this.props.pos
   };
 
+  handleClickOutside = this.props.handleMenuClose;
+
   handleSubmit = event => this.props.handleSubmit(this.state.pos);
 
   render() {
     const { pos, classes } = this.props;
-    const placeholder = pos ? pos : {lat: "Latitude", lng: "Longitude"};
-
-    if (!pos) {
-      return <div className={classes.root} >
-        Localisation unavailable
-      </div>;
-    }
+    const placeholder = pos ? pos : {lat: "", lng: ""};
 
     return (
       <form 
@@ -82,4 +76,4 @@ class CoordInput extends Component {
 }
 
 
-export default withStyles(styles)(CoordInput);
+export default withStyles(styles)(onClickOutside(CoordInput));

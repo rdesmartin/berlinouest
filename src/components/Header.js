@@ -77,7 +77,7 @@ class Header extends Component {
             getContentAnchorEl={null}
             open={Boolean(menuAnchorEl)}
           >
-            <CoordInput pos={pos} handleSubmit={this.handleSubmit} />
+            <CoordInput pos={pos} handleSubmit={this.handleSubmit} handleMenuClose={this.handleMenuClose}/>
           </Menu>}
           
           <Toolbar className={classes.toolbar}>

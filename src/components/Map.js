@@ -1,20 +1,53 @@
 //@flow
 import React, { Component } from "react";
+import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Map, TileLayer, Marker, Popup, GeoJSON } from "react-leaflet";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+const styles = {
+  errorMessage: {
+    color: "#dd350b",
+    width: "100%",
+    margin: "5% 5%",
+  },
+  circularProgress: {
+    width: "100%",
+    display: "flex",
+    flexFlow: "column nowrap",
+    alignItems: "center",
+    justifycontent: "center",
+    marginTop: "10%"
+  }
+}
+
 
 class WallMap extends Component {
   constructor(props){
     super(props);
     this.state = {
-      pos: null,
+      loading: true,
       zoom: 10,
     }
+    this.timer = null;
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+  }
+
+  componentDidMount() {
+    this.timer = setTimeout(() => {
+      this.setState({
+        loading: false,
+      });
+    }, 10000);
+  }
+
+
   render() {
-    const { pos, geojsonWall, geojsonCity } = this.props;
+    const { pos, classes, geojsonWall, geojsonCity } = this.props;
     const viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 
     return (
@@ -26,12 +59,24 @@ class WallMap extends Component {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           {
-            geojsonWall &&
-              <GeoJSON data={geojsonWall} />
+            geojsonCity &&
+              <GeoJSON 
+                data={geojsonCity} 
+                style={geojsonFeature => ({
+                  fill: false,
+                  color: "#dd350b"
+                })}
+              />
           }
+
           {
             geojsonWall &&
-              <GeoJSON data={geojsonCity} />
+              <GeoJSON 
+                data={geojsonWall} 
+                style={geojsonFeature => ({
+                  weight: 2,
+                })}
+              />
           }
           <Marker position={pos}>
             <Popup>
@@ -40,7 +85,19 @@ class WallMap extends Component {
           </Marker>
         </Map>
         }
-        {!pos && <div>Unable to find your location</div>}
+        {
+          !pos && this.state.loading &&
+            <div className={classes.circularProgress}>
+              <CircularProgress/>
+            </div>
+        }
+        {
+          !pos && !this.state.loading &&
+            <div className={classes.errorMessage}>
+              Unable to find your location. <br/>
+              Please allow localisation or enter coordinates manually by clicking on the compass.
+            </div>
+        }
       </div>
     )
   }
@@ -55,4 +112,4 @@ const MapStateToProps = state => ({
 });
 
 
-export default connect(MapStateToProps)(WallMap);
+export default withStyles(styles)(connect(MapStateToProps)(WallMap));
