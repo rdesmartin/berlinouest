@@ -15,8 +15,11 @@ const styles = {
     width: "100%", 
     display: "flex", 
     flexFlow: "row nowrap", 
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center"
+  },
+  buttonLink: {
+    textDecoration: "none",
   }
 }
 
@@ -59,12 +62,12 @@ class CoordInput extends Component {
           margin="normal"
         />
         <div className={classes.buttonsContainer} >
-         <Link to="/" style={{flex: 1}} >
+         <Link className={classes.buttonLink} to="/">
           <Button onClick={this.handleSubmit}>
            GO
            </Button>
          </Link>
-         <Link style={{flex: 1}} to="/map">
+         <Link className={classes.buttonLink} to="/map">
           <Button onClick={this.handleSubmit}>
            MAP
            </Button>
