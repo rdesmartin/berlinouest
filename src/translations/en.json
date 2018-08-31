@@ -1,0 +1,12 @@
+{
+	"global.about": "About",
+	"global.home": "Home",
+	"global.map": "Map",
+	"about.text" : "This program uses React-Leaflet, React.js and Openstreetmap data to tell if you are currently in West Berlin or not.",
+	"about.githubLink": "View project on GitHub",
+	"error.pos.unavailable": "Unable to find your location. Please allow localisation or enter coordinates manually by clicking on the compass.",
+	"home.button.label": "view on map",
+	"map.popup.label": "You are here.",
+	"coordinput.button.go": "go",	
+	"coordinput.button.map": "MAP"
+}

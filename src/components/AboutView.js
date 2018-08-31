@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
+import { FormattedMessage } from 'react-intl';
 
 const styles = {
   container: {
@@ -18,10 +19,12 @@ class AboutView extends Component {
     return (
       <div className={classes.container}>
         <h1>Berlin Wall App</h1>
-        <p>This program uses React-Leaflet, React.js and Openstreetmap data to
-          tell if you are currently in West Berlin or not.</p>
+
+        <p>
+          <FormattedMessage id="about.text"/>
+        </p>
         <a href="https://github.com/rdesmartin/leaflet_reactjs_openstreetmap_berliner_mauer">
-          View project on GitHub
+          <FormattedMessage id="about.githubLink"/>
         </a>
       </div>
     );

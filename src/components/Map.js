@@ -1,6 +1,7 @@
 //@flow
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
+import { FormattedMessage } from 'react-intl';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Map, TileLayer, Marker, Popup, GeoJSON } from "react-leaflet";
@@ -80,7 +81,7 @@ class WallMap extends Component {
           }
           <Marker position={pos}>
             <Popup>
-              <div>You are here</div>
+              <FormattedMessage id="map.popup.label" />
             </Popup>
           </Marker>
         </Map>
@@ -94,8 +95,7 @@ class WallMap extends Component {
         {
           !pos && !this.state.loading &&
             <div className={classes.errorMessage}>
-              Unable to find your location. <br/>
-              Please allow localisation or enter coordinates manually by clicking on the compass.
+              <FormattedMessage id="error.pos.unavailable" />
             </div>
         }
       </div>

@@ -1,0 +1,16 @@
+{
+	"global.about": "A propos",
+	"global.home": "Accueil",
+	"global.map": "Carte",
+	"about.text" : "Ce programme utilise React.js, React-leaflet et des données d'OpenStreetMap pour savoir de quel côté du mur de Berlin vous vous trouvez actuellement.",
+	"about.githubLink": "Voir le projet sur GitHub",
+	"home.welcome": "Bienvenue",
+	"home.side.EAST": "Vous êtes du côté EST du mur",
+	"home.side.WEST": "Vous êtes du côté OUEST du mur",
+	"home.side.OUTSIDE": "Vous n'êtes pas dans Berlin",
+	"error.pos.unavailable": "Localisation impossible. Autoriser la localisation ou entrer des coordonnées en cliquant sur la boussole.",
+	"home.button.label": "voir sur la carte",
+	"map.popup.label": "Vous êtes ici.",
+	"coordinput.button.go": "y aller",	
+	"coordinput.button.map": "CARTE"
+}

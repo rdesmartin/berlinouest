@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from "react-router-dom";
 import registerServiceWorker from "./registerServiceWorker";
 
 import { Provider } from 'react-redux'
@@ -9,13 +8,17 @@ import configureStore from "./store";
 import './index.css';
 import App from './App';
 
-const store = configureStore();
+const initialState = {
+	locale: navigator.language.split(/[-_]/)[0] || 'en',
+	pos: null,
+}
+
+
+const store = configureStore(initialState);
 
 const Root = () => (
   <Provider store={store}>
-    <Router>
       <App />
-    </Router>
   </Provider>
 );
 

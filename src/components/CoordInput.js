@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { FormattedMessage } from 'react-intl';
 import onClickOutside from "react-onclickoutside";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -20,6 +21,9 @@ const styles = {
   },
   buttonLink: {
     textDecoration: "none",
+  },
+  button: {
+    flex: "1 1 0px",
   }
 }
 
@@ -63,14 +67,14 @@ class CoordInput extends Component {
         />
         <div className={classes.buttonsContainer} >
          <Link className={classes.buttonLink} to="/">
-          <Button onClick={this.handleSubmit}>
-           GO
+          <Button onClick={this.handleSubmit} variant="outlined">
+            <FormattedMessage id="coordinput.button.go" />
            </Button>
          </Link>
          <Link className={classes.buttonLink} to="/map">
-          <Button onClick={this.handleSubmit}>
-           MAP
-           </Button>
+          <Button className={classes.button} onClick={this.handleSubmit} variant="outlined">
+            <FormattedMessage id="coordinput.button.map" />
+          </Button>
          </Link>
         </div>
       </form>

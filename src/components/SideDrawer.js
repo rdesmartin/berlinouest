@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
+import { injectIntl, intlShape } from 'react-intl';
+
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import IconButton from '@material-ui/core/IconButton';
@@ -30,12 +32,12 @@ const styles = {
 // inject history because for some reason react-router <Link> component does
 // not work in MenuItems
 const listItems = [
-  { route: "/", label: "Home" },
-  { route: "/map", label: "Map" },
-  { route: "/about", label: "About" },  
+  { route: "/", label: "global.home" },
+  { route: "/map", label: "global.map" },
+  { route: "/about", label: "global.about" },  
 ];
 
-const SideList = withRouter(({ history, classes, toggleDrawer }) =>
+const SideList = withRouter(({ history, classes, toggleDrawer, intl }) =>
   <div className={classes.list}>
     {listItems.map((item, index) => 
       <div key={index}>
@@ -45,7 +47,7 @@ const SideList = withRouter(({ history, classes, toggleDrawer }) =>
           toggleDrawer(false);
         }}
       >
-        {item.label}
+        {intl.formatMessage({"id": item.label})}
       </MenuItem>
       <Divider />
       </div>
@@ -56,7 +58,7 @@ const SideList = withRouter(({ history, classes, toggleDrawer }) =>
 
 class SideDrawer extends Component {
   render() {
-    const { classes, open, toggleDrawer } = this.props;
+    const { classes, open, toggleDrawer, intl } = this.props;
 
     const handleClose = event => {toggleDrawer(false)};
 
@@ -71,7 +73,7 @@ class SideDrawer extends Component {
             <ArrowLeft />
           </IconButton>
           <Divider />
-          <SideList toggleDrawer={toggleDrawer} classes={classes} />
+          <SideList toggleDrawer={toggleDrawer} classes={classes} intl={intl} />
         </Drawer>
       </div>
     );
@@ -82,6 +84,7 @@ SideDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
   toggleDrawer: PropTypes.any,
+  intl: intlShape,
 };
 
-export default withStyles(styles)(SideDrawer);
+export default withStyles(styles)(injectIntl(SideDrawer));
