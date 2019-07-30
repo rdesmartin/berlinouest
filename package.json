@@ -20,7 +20,8 @@
     "react-leaflet": "^2.0.0",
     "react-onclickoutside": "^6.7.1",
     "react-redux": "^5.0.7",
-    "react-scripts": "^1.1.4",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "^3.0.1",
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.5",
     "redux-thunk": "^2.3.0"
@@ -32,14 +33,23 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rdesmartin/leaflet_reactjs_openstreetmap_berliner_mauer.git"
-  },
+  "repository": "git+https://github.com/rdesmartin/leaflet_reactjs_openstreetmap_berliner_mauer.git",
   "author": "remi",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/rdesmartin/leaflet_reactjs_openstreetmap_berliner_mauer/issues"
   },
-  "homepage": "https://berlin.desmartin.xyz"
+  "homepage": "https://rdesmartin.github.io/leaflet_reactjs_openstreetmap_berliner_mauer",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
